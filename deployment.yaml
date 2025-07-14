@@ -1,0 +1,33 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: clo835-mock
+  namespace: mock
+  labels:
+    appname: node-app-deployment
+    component: frontend
+spec:
+  selector:
+    matchLabels:
+      appname: node-app-pod
+      component: frontend
+  template:
+    metadata:
+      labels:
+        appname: node-app-deployment
+        component: frontend
+    spec:
+      containers:
+      - name: node-app
+        image: app-mock:v1.0
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - mountPath: /tmp/data
+            name: mock-volume
+      imagePullSecrets:
+        - name: creds-mock
+      volumes:
+        - name: app-mock-volume
+          persistentVolumeClaim:
+            claimName: app-mock-pvc

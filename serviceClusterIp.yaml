@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-app
+  namespace: mock
+  labels:
+    appname: node-app-service
+    component: frontend
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    appname: node-app-deployment
+    component: frontend
