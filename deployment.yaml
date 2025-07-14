@@ -1,4 +1,4 @@
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: clo835-mock
@@ -7,6 +7,7 @@ metadata:
     appname: node-app-deployment
     component: frontend
 spec:
+  replicas: 1
   selector:
     matchLabels:
       appname: node-app-pod
@@ -14,19 +15,19 @@ spec:
   template:
     metadata:
       labels:
-        appname: node-app-deployment
+        appname: node-app-pod     # ust match selector
         component: frontend
     spec:
       containers:
-      - name: node-app
-        image: app-mock:v1.0
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-          - mountPath: /tmp/data
-            name: mock-volume
+        - name: node-app
+          image: 272795904558.dkr.ecr.us-east-1.amazonaws.com/clo835-midterm:latest
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - mountPath: /tmp/data
+              name: app-mock-volume     # Fixed name to match volume below
       imagePullSecrets:
-        - name: creds-mock
+        - name: ecr-creds
       volumes:
         - name: app-mock-volume
           persistentVolumeClaim:

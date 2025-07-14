@@ -8,9 +8,10 @@ metadata:
     component: frontend
 spec:
   type: NodePort
-  ports:
-  - port: 30000
-    targetPort: 8081
   selector:
     appname: node-app-pod
     component: frontend
+  ports:
+    - port: 80               # internal service port
+      targetPort: 8081       # container's port (from your Deployment)
+      nodePort: 30000        # externally accessible port

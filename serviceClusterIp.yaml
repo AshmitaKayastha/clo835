@@ -1,15 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: node-app
+  name: clo835-clusterip
   namespace: mock
-  labels:
-    appname: node-app-service
-    component: frontend
 spec:
-  ports:
-  - port: 80
-    targetPort: 8080
   selector:
-    appname: node-app-deployment
+    appname: node-app-pod
     component: frontend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8081
+  type: ClusterIP
